@@ -36,13 +36,13 @@ public class ClienteDAO {
             System.out.println("Cliente Salvo com sucesso");
         }catch (SQLException e){
             System.out.println("Falha ao tentar salvar o cliente");
-    }
+        }
 
         public Cliente pesquisar(Long, id){
 
             Connection conexao = null;
 
-            String sql1 = "SELECT * FROM produto WHERE id=?";
+            String sql1 = "SELECT * FROM cliente WHERE id=?";
 
             PreparedStatement ps2 = conexao.prepareStatement(sql1);
 
@@ -50,6 +50,7 @@ public class ClienteDAO {
             ResultSet resultSet = ps2.executeQuery();
 
             try{
+
             if (resultSet.next()){
                 Cliente clientePesquisado = new Cliente();
 

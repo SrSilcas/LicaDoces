@@ -5,6 +5,7 @@ import utils.JDBCultil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProducaoDAO {
@@ -36,6 +37,48 @@ public class ProducaoDAO {
         }catch (SQLException e) {
 
             System.out.println("Falha ao salvar o pedido");
+
+        }
+
+        public Producao pesquisar(Long, id){
+
+            Connection conexao = null;
+
+            String sql1 = "SELECT * FROM producao WHERE id=?";
+
+            PreparedStatement ps1 = conexao.prepareStatement(sql1);
+
+            ps1.setLong(1,1l);
+            ResultSet resultSet = ps1.executeQuery();
+
+            try{
+
+            if (resultSet.next()) {
+
+                Producao producaoPesquisado = new Producao();
+
+                producaoPesquisado.setId(resultSet.getLong("id"));
+                producaoPesquisado.setClienteId(resultSet.getLong("cliente_id"));
+                producaoPesquisado.setPedido(resultSet.getString("pedido"));
+                producaoPesquisado.setDataEntrega(resultSet.getString("data_entrega"));
+                producaoPesquisado.setValor(resultSet.getDouble("valor"));
+                producaoPesquisado.setValorPago(resultSet.getDouble("valor_pago"));
+                producaoPesquisado.setValorAPagar(resultSet.getDouble("valor_a_pagar"));
+                producaoPesquisado.setMetodoDePagamento(resultSet.getString("metodo_de_pagamento"));
+
+                ps1.execute();
+
+                conexao.close();
+
+                return producaoPesquisado;
+            }
+
+            }catch (SQLException e){
+
+                System.out.println("Busca de produto falhou");
+
+            }
+
 
         }
     }
