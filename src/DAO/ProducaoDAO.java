@@ -40,18 +40,20 @@ public class ProducaoDAO {
 
         }
 
-        public Producao pesquisar(Long, id){
+        }
 
-            Connection conexao = null;
+    public Producao pesquisar(Long id) throws SQLException {
 
-            String sql1 = "SELECT * FROM producao WHERE id=?";
+        Connection conexao = null;
 
-            PreparedStatement ps1 = conexao.prepareStatement(sql1);
+        String sql1 = "SELECT * FROM producao WHERE id=?";
 
-            ps1.setLong(1,1l);
-            ResultSet resultSet = ps1.executeQuery();
+        PreparedStatement ps1 = conexao.prepareStatement(sql1);
 
-            try{
+        ps1.setLong(1,1l);
+        ResultSet resultSet = ps1.executeQuery();
+
+        try{
 
             if (resultSet.next()) {
 
@@ -73,13 +75,55 @@ public class ProducaoDAO {
                 return producaoPesquisado;
             }
 
-            }catch (SQLException e){
+        }catch (SQLException e){
 
-                System.out.println("Busca de produto falhou");
-
-            }
-
+            System.out.println("Busca de produção falhou");
 
         }
+            //     return ? this need return bot return why
+     }
+
+    //Nesse bloco metodo pesquisar a partir do data de entrega do pedido
+
+    public Producao pesquisar(String dataEntrega) throws SQLException {
+
+        Connection conexao = null;
+
+        String sql2 = "SELECT * FROM producao WHERE data_entrega=?";
+
+        PreparedStatement ps2 = conexao.prepareStatement(sql2);
+
+        ps2.setString(1,"");
+
+        ResultSet resultSet1 = ps2.executeQuery();;
+
+        try {
+
+            if (resultSet1.next()) {
+
+                Producao producaoPesquisado = new Producao();
+
+                producaoPesquisado.setId(resultSet1.getLong("id"));
+                producaoPesquisado.setClienteId(resultSet1.getLong("cliente_id"));
+                producaoPesquisado.setPedido(resultSet1.getString("pedido"));
+                producaoPesquisado.setDataEntrega(resultSet1.getString("data_entrega"));
+                producaoPesquisado.setValor(resultSet1.getDouble("valor"));
+                producaoPesquisado.setValorPago(resultSet1.getDouble("valor_pago"));
+                producaoPesquisado.setValorAPagar(resultSet1.getDouble("valor_a_pagar"));
+                producaoPesquisado.setMetodoDePagamento(resultSet1.getString("metodo_de_pagamento"));
+
+                ps2.execute();
+
+                conexao.close();
+
+                return producaoPesquisado;
+            }
+
+        } catch (SQLException e) {
+
+                System.out.println("Busca de produção falhou");
+
+        }
+        //     return ? this need return bot return why
     }
 }
