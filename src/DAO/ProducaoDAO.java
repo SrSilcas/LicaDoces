@@ -42,6 +42,8 @@ public class ProducaoDAO {
 
         }
 
+        //Nesse bloco metodo pesquisar a partir do ID do pedido
+
     public Producao pesquisar(Long id) throws SQLException {
 
         Connection conexao = null;
